@@ -1,0 +1,496 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="callbackApp">
+
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+
+    <!-- Page title -->
+    <title>Callback System</title>
+    <link rel="icon" type="image/png" href="./resources/img/icon-crm.png" />
+
+    <!-- Vendor styles -->
+    <link rel="stylesheet" href="./resources/css/font-awesome-4.7.0/css/font-awesome.css">
+    <link rel="stylesheet" href="./resources/css/metisMenu.css">
+    <link rel="stylesheet" href="./resources/css/animate.css">
+    <link rel="stylesheet" href="./resources/css/bootstrap.css">
+
+    <!-- App styles -->
+    <link rel="stylesheet" href="./resources/css/icon-font-stroke/assets/Pe-icon-7-stroke.css">
+    <link rel="stylesheet" href="./resources/css/helper.css">
+    <link rel="stylesheet" href="./resources/css/style.css">
+    <link rel="stylesheet" href="./resources/css/select2.css">
+
+    <!-- toastr -->
+    <link href="../resources/toastr/css/toastr.css" rel="stylesheet">
+
+    <link href="resources/callback.css" rel="stylesheet" type="text/css">
+
+    <link rel="stylesheet" href="resources/css/datetimepicker.min.css">
+
+    <link rel="stylesheet" href="https://cdn.rawgit.com/bantikyan/icheck-bootstrap/master/icheck-bootstrap.min.css">
+</head>
+
+<body class="fixed-navbar sidebar-scroll" cz-shortcut-listen="true">
+    <style>
+        .skin-option {
+            position: fixed;
+            text-align: center;
+            right: -1px;
+            padding: 10px;
+            top: 80px;
+            width: 150px;
+            height: 133px;
+            text-transform: uppercase;
+            background-color: #ffffff;
+            box-shadow: 0 1px 10px 0px rgba(0, 0, 0, 0.05), 10px 12px 7px 3px rgba(0, 0, 0, .1);
+            border-radius: 4px 0 0 4px;
+            z-index: 100;
+        }
+    </style>
+    <style>
+        .toggler {
+            width: 500px;
+            height: 200px;
+            position: relative;
+        }
+
+        #button {
+            padding: .5em 1em;
+            text-decoration: none;
+        }
+
+        #effect {
+            width: 240px;
+            height: 170px;
+            padding: 0.4em;
+            position: relative;
+        }
+
+        #effect h3 {
+            margin: 0;
+            padding: 0.4em;
+            text-align: center;
+        }
+
+        .ui-effects-transfer {
+            border: 2px dotted gray;
+        }
+    </style>
+
+    <div id="header" ng-style="{'visibility': currentUser ? 'visible' : 'hidden'}" class="hidden-print">
+        <div class="color-line">
+        </div>
+        <div id="logo" class="light-version">
+            <span>
+                Callback System
+            </span>
+        </div>
+        <nav role="navigation">
+            <div class="header-link hide-menu">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="small-logo">
+                <span class="text-primary">Callback System</span>
+            </div>
+            <form role="search" class="navbar-form-custom" method="post" action="#">
+                <div class="form-group">
+                    <input type="text" placeholder="CRM - Enarcil SRL" class="form-control" name="search">
+                </div>
+            </form>
+            <div class="mobile-menu">
+                <button type="button" class="navbar-toggle mobile-menu-toggle" data-toggle="collapse" data-target="#mobile-collapse">
+                    <i class="fa fa-chevron-down"></i>
+                </button>
+                <div class="collapse mobile-navbar" id="mobile-collapse">
+                    <ul class="nav navbar-nav">
+                        <li>
+                            <a class="" href="#">Iniciar</a>
+                        </li>
+                        <li>
+                            <a class="" href="#">Salir</a>
+                        </li>
+                        <li>
+                            <a class="" href="#">Perfil</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+            <div class="navbar-right">
+                <ul class="nav navbar-nav no-borders">
+                    <li class="dropdown">
+                        <a href="#/home" target="_self" aria-expanded="false" title="Home">
+                            <i class="pe-7s-home"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a href="https://hydro.anh.gob.bo/Talleres/Sitio/Autenticacion/wfAutenticacion.aspx" target="_blank" aria-expanded="false"
+                            title="ANH">
+                            <i class="pe-7s-car"></i>
+                        </a>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" target="_self" data-toggle="dropdown" aria-expanded="false" title="Notificaciones">
+                            <i class="pe-7s-speaker"></i>
+                        </a>
+                        <ul class="dropdown-menu hdropdown notification animated flipInX">
+                            <li>
+                                <a>
+                                    <span class="label label-success">Caducados</span>Nuevo usuarios.</a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span class="label label-warning">Atencion</span> Varios no respondieron.</a>
+                            </li>
+                            <li>
+                                <a>
+                                    <span class="label label-danger">Error</span> El sistema fallo.</a>
+                            </li>
+                            <li class="summary">
+                                <a href="#">Ver todas las notificaciones</a>
+                            </li>
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a class="dropdown-toggle" href="#" target="_self" data-toggle="dropdown" aria-expanded="false" title="Cambiar vista de pagina">
+                            <i class="pe-7s-keypad"></i>
+                        </a>
+                        <div class="dropdown-menu hdropdown bigmenu animated flipInX">
+                            <table>
+                                <tbody>
+                                    <tr>
+                                        <td>
+                                            <a href="#" target="_self" id="layout-one">
+                                                <i class="pe pe-7s-bookmarks text-info"></i>
+                                                <h5>Layout One</h5>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" target="_self" id="layout-two">
+                                                <i class="pe pe-7s-photo-gallery text-warning"></i>
+                                                <h5>Layout Two</h5>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td>
+                                            <a href="#" target="_self" id="layout-three">
+                                                <i class="pe pe-7s-exapnd2 text-info"></i>
+                                                <h5>Layout Three</h5>
+                                            </a>
+                                        </td>
+                                        <td>
+                                            <a href="#" target="_self" id="layout-four">
+                                                <i class="pe pe-7s-monitor text-danger"></i>
+                                                <h5>Layout Four</h5>
+                                            </a>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </li>
+                    <li class="dropdown" ng-controller="notificationController">
+                        <a class="dropdown-toggle label-menu-corner" href="#" target="_self" data-toggle="dropdown" title="Correos">
+                            <i class="pe-7s-mail"></i>
+                            <span ng-show="notices.length >0" class="label label-success">{{notices.length}}</span>
+                        </a>
+                        <ul class="dropdown-menu hdropdown animated flipInX">
+                            <div class="title">
+                                Tienes {{notices.length}} notificaciones
+                            </div>
+
+                            <li ng-repeat="notice in notices">
+                                <a href="#/notice/confirmation/{{notice.id}}" target="_blank">
+                                    <span class="label label-info">Info</span>
+                                    El Cliente : {{notice.idCustomer}} fue Asignado a su taller
+                                </a>
+                            </li>
+                            <!--<li class="summary"><a href="#">Ver todos los mensajes</a></li>-->
+                        </ul>
+                    </li>
+                    <li class="dropdown">
+                        <a href="#" target="_self" ng-click='logout($event)' title="Cerrar sesion">
+                            <i class="pe-7s-upload pe-rotate-90"></i>
+                        </a>
+                    </li>
+                </ul>
+            </div>
+        </nav>
+    </div>
+
+    <!-- Navigation -->
+    <aside id="menu" ng-style="{'visibility': currentUser ? 'visible' : 'hidden'}" class="hidden-print">
+        <div class="slimScrollDiv" style="position: relative; overflow: hidden; width: auto; height: 100%;">
+            <div id="navigation" style="overflow: hidden; width: auto; height: 100%;">
+                <div class="profile-picture">
+                    <a href="#/home">
+                        <img src="./resources/img/profile2.jpg" class="img-circle m-b" alt="logo">
+                    </a>
+
+                    <div class="stats-label text-color">
+                        <span class="font-extra-bold font-uppercase">{{fullnameuser}}</span>
+                        <div>
+                            <h4 class="font-extra-bold m-b-xs">
+                                {{userName}}
+                            </h4>
+                            <small class="text-muted">{{roleuser}}</small>
+                        </div>
+                    </div>
+                </div>
+
+                <ul class="nav" id="side-menu">
+                    <li ng-repeat="(itemIndex, module) in listMenuPermit" id="0{{itemIndex}}">
+                        <a href="#" ng-click="showSubmenu(itemIndex)">
+                            <span class="nav-label">{{module.moduleName}}</span>
+                            <span class="fa arrow"></span>
+                        </a>
+                        <ul class="nav nav-second-level collapse" id={{itemIndex}}>
+                            <li ng-repeat="page in module.pages">
+                                <a href="#/{{page.path}}" target="_self">{{page.title}}</a>
+                            </li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+            <div class="slimScrollBar" style="background: rgb(0, 0, 0); width: 0px; position: absolute; top: 0px; opacity: 0.3; display: block; border-radius: 7px; z-index: 99; right: 1px; height: 302.909px;"></div>
+            <div class="slimScrollRail" style="width: 0px; height: 100%; position: absolute; top: 0px; display: none; border-radius: 7px; background: rgb(51, 51, 51); opacity: 0.2; z-index: 90; right: 1px;"></div>
+        </div>
+    </aside>
+
+    <!-- Main Wrapper -->
+    <div id="wrapper" ng-class=" !currentUser ? 'login-screen' : 'app'">
+        <div class="content" ng-view>
+        </div>
+        <!-- Right sidebar -->
+        <div id="right-sidebar" class="animated fadeInRight hidden-print">
+            <div class="p-m">
+                <button id="sidebar-close" class="right-sidebar-toggle sidebar-button btn btn-default m-b-md">
+                    <i class="pe pe-7s-close"></i>
+                </button>
+                <div>
+                    <span class="font-bold no-margins"> Analytics </span>
+                    <br>
+                    <small> Lorem Ipsum is simply dummy text of the printing simply all dummy text.</small>
+                </div>
+                <div class="row m-t-sm m-b-sm">
+                    <div class="col-lg-6">
+                        <h3 class="no-margins font-extra-bold text-success">300,102</h3>
+
+                        <div class="font-bold">98%
+                            <i class="fa fa-level-up text-success"></i>
+                        </div>
+                    </div>
+                    <div class="col-lg-6">
+                        <h3 class="no-margins font-extra-bold text-success">280,200</h3>
+
+                        <div class="font-bold">98%
+                            <i class="fa fa-level-up text-success"></i>
+                        </div>
+                    </div>
+                </div>
+                <div class="progress m-t-xs full progress-small">
+                    <div style="width: 25%" aria-valuemax="100" aria-valuemin="0" aria-valuenow="25" role="progressbar" class=" progress-bar progress-bar-success">
+                        <span class="sr-only">35% Complete (success)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="p-m bg-light border-bottom border-top">
+                <span class="font-bold no-margins"> Social talks </span>
+                <br>
+                <small> Lorem Ipsum is simply dummy text of the printing simply all dummy text.</small>
+                <div class="m-t-md">
+                    <div class="social-talk">
+                        <div class="media social-profile clearfix">
+                            <a class="pull-left">
+                                <img src="./resources/img/a1.jpg" alt="profile-picture">
+                            </a>
+
+                            <div class="media-body">
+                                <span class="font-bold">John Novak</span>
+                                <small class="text-muted">21.03.2015</small>
+                                <div class="social-content small">
+                                    Injected humour, or randomised words which don't look even slightly believable.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-talk">
+                        <div class="media social-profile clearfix">
+                            <a class="pull-left">
+                                <img src="./resources/img/a3.jpg" alt="profile-picture">
+                            </a>
+                            <div class="media-body">
+                                <span class="font-bold">Mark Smith</span>
+                                <small class="text-muted">14.04.2015</small>
+                                <div class="social-content">
+                                    Many desktop publishing packages and web page editors.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="social-talk">
+                        <div class="media social-profile clearfix">
+                            <a class="pull-left">
+                                <img src="./resources/img/a4.jpg" alt="profile-picture">
+                            </a>
+
+                            <div class="media-body">
+                                <span class="font-bold">Marica Morgan</span>
+                                <small class="text-muted">21.03.2015</small>
+
+                                <div class="social-content">
+                                    There are many variations of passages of Lorem Ipsum available, but the majority have
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="p-m">
+                <span class="font-bold no-margins"> Sales in last week </span>
+                <div class="m-t-xs">
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <small>Today</small>
+                            <h4 class="m-t-xs">$170,20
+                                <i class="fa fa-level-up text-success"></i>
+                            </h4>
+                        </div>
+                        <div class="col-xs-6">
+                            <small>Last week</small>
+                            <h4 class="m-t-xs">$580,90
+                                <i class="fa fa-level-up text-success"></i>
+                            </h4>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-xs-6">
+                            <small>Today</small>
+                            <h4 class="m-t-xs">$620,20
+                                <i class="fa fa-level-up text-success"></i>
+                            </h4>
+                        </div>
+                        <div class="col-xs-6">
+                            <small>Last week</small>
+                            <h4 class="m-t-xs">$140,70
+                                <i class="fa fa-level-up text-success"></i>
+                            </h4>
+                        </div>
+                    </div>
+                </div>
+                <small> Lorem Ipsum is simply dummy text of the printing simply all dummy text. Many desktop publishing packages
+                    and web page editors.
+                </small>
+            </div>
+
+        </div>
+
+        <!-- Footer-->
+        <footer class="footer hidden-print">
+            <span class="pull-right">
+                Customer Relationship Management
+            </span> EngineersWorking 2017
+        </footer>
+    </div>
+
+    <div class="loading">
+        <div class="loader"></div>
+    </div>
+
+    <!-- Vendor scripts -->
+    <!--<script async="" src="./resources/js/analytics.js"></script>-->
+    <script src="./resources/js/jquery.min.js"></script>
+    <script src="./resources/js/jquery-ui.min.js"></script>
+    <script src="./resources/js/jquery.slimscroll.min.js"></script>
+    <script src="./resources/js/bootstrap.min.js"></script>
+    <!--<script src="./resources/js/jquery.flot.js"></script>
+    <script src="./resources/js/jquery.flot.resize.js"></script>
+    <script src="./resources/js/jquery.flot.pie.js"></script>-->
+    <!--<script src="./resources/js/curvedLines.js"></script>-->
+    <script src="./resources/js/index.js"></script>
+    <script src="./resources/js/metisMenu.min.js"></script>
+    <script src="./resources/js/icheck.min.js"></script>
+    <script src="./resources/js/select2-3.5.2.js"></script>
+    <script src="./resources/js/jquery.peity.min.js"></script>
+    <script src="./resources/js/index_.js"></script>
+    <script src="./resources/js/jquery.autocomplete.min.js"></script>
+
+    <!-- App scripts -->
+    <script src="./resources/js/homer.js"></script>
+    <!--<script src="./resources/js/charts.js"></script>-->
+
+    <!--angularJS resources-->
+    <!--<script src="app/libs/angular.js"></script>-->
+    <script src="app/libs/angularjs/angular.js"></script>
+    <script src="app/libs/angularjs/angular-route.js"></script>
+    <script src="app/libs/localstore.js"></script>
+    <script src="app/libs/prototype.js"></script>
+    <script src="app/libs/moment.js"></script>
+    <script src="app/libs/moment-timezone-utils.min.js"></script>
+    <script src="resources/js/datetimepicker.min.js"></script>
+    <script src="resources/js/ratable.js"></script>
+    <script src="app/app.js"></script>
+
+    <!-- toastr -->
+    <script src="resources/toastr/js/toastr.js"></script>
+
+    <!--angularJS directives-->
+    <script src="app/directives/pagination.js"></script>
+    <script src="app/directives/enter.js"></script>
+    <script src="app/directives/spinner.js"></script>
+    <script src="app/directives/numericOnly.js"></script>
+    <script src="app/directives/validation.js"></script>
+    <script src="app/directives/modalMap.js"></script>
+
+    <!--Controller and Services-->
+    <script src="app/controllers/home/homeController.js"></script>
+    <script src="app/controllers/home/notificationController.js"></script>
+    <script src="app/services/common/commonService.js"></script>
+
+    <script src="app/filters/filterGarage.js"></script>
+
+    <script src="app/controllers/home/loginController.js"></script>
+    <script src="app/services/home/loginService.js"></script>
+
+    <script src="app/controllers/maintenance/roleController.js"></script>
+    <script src="app/services/maintenance/roleService.js"></script>
+
+    <script src="app/controllers/maintenance/userController.js"></script>
+    <script src="app/services/maintenance/userService.js"></script>
+
+    <script src="app/controllers/maintenance/permitController.js"></script>
+    <script src="app/services/maintenance/permitService.js"></script>
+
+    <script src="app/controllers/center/searchController.js"></script>
+    <script src="app/controllers/center/searchQualityController.js"></script>
+    <script src="app/controllers/center/searchReprogramController.js"></script>
+    <script src="app/controllers/center/reportTicketController.js"></script>
+    <script src="app/controllers/center/reportByStatusController.js"></script>
+    <script src="app/services/center/customerService.js"></script>
+
+    <script src="app/controllers/center/garageController.js"></script>
+    <script src="app/services/center/garageService.js"></script>
+
+    <script src="app/controllers/center/cylinderController.js"></script>
+    <script src="app/services/center/cylinderService.js"></script>
+
+    <script src="app/controllers/center/carController.js"></script>
+    <script src="app/services/center/carService.js"></script>
+
+    <script src="app/controllers/center/ticketController.js"></script>
+    <script src="app/services/center/ticketService.js"></script>
+
+    <script src="app/services/center/workOrderService.js"></script>
+
+    <script src="app/services/center/questionService.js"></script>
+    <script src="app/services/center/filterService.js"></script>
+    <script src="app/services/maintenance/noticeService.js"></script>
+    <script src="app/services/query/procedureService.js"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDqAfcyUSOAgXTaTAGHYMAhrUBVkfUiZds" async defer></script>
+    <!--<script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCkbOaHhoPf9RGfLs-qZ3Gs9G4eukN8uiE" ></script>-->
+</body>
+
+</html>

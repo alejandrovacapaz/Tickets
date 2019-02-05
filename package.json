@@ -1,0 +1,45 @@
+{
+  "name": "callbacksystem",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "start": "node app.js",
+    "test": "npm run test-unit && npm run test-integration",
+    "test-unit": "./node_modules/.bin/mocha test/unit/*.test.js",
+    "test-integration": "./node_modules/.bin/mocha test/integration/*.test.js"
+  },
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "cookie-parser": "^1.4.3",
+    "crypto": "0.0.3",
+    "debug": "~2.2.0",
+    "excel-export": "0.3.9",
+    "express": "^4.14.0",
+    "express-jwt": "0.2.1",
+    "jade": "~1.11.0",
+    "jsonwebtoken": "0.4.0",
+    "lodash": "^3.6.0",
+    "moment": "2.16.0",
+    "morgan": "^1.7.0",
+    "mysql": "^2.11.1",
+    "mysql2": "^1.1.0",
+    "node-excel-export": "^1.4.3",
+    "nodemailer": "4.1.0",
+    "nodemailer-smtp-transport": "latest",
+    "sequelize": "^3.23.6",
+    "sequelize-cli": "^2.4.0",
+    "serve-favicon": "~2.3.0",
+    "sqlite3": "^3.0.8",
+    "xoauth2": "latest",
+    "xlsx-style": "^0.8.13"
+  },
+  "devDependencies": {
+    "bluebird": "^3.4.1",
+    "expect.js": "^0.3.1",
+    "mocha": "^3.0.2",
+    "supertest": "^2.0.0"
+  },
+  "engines": {
+    "node": "8.2.1"
+  }
+}

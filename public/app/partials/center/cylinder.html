@@ -1,0 +1,143 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="hpanel hblue">
+            <div class="panel-heading hbuilt">
+                Lista de registros
+            </div>
+            <div class="panel-body">
+                <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row">
+                        <div class="col-sm-6">
+                            <div class="dataTables_length">
+                                <select class="form-control input-sm" ng-model="pageSize" ng-options="item for item in filterRowsByPage"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-6">
+                            <div class="dataTables_filter pull-right">
+                                <label>
+									<input type="search" class="form-control input-sm" placeholder="Buscar..." ng-model="search">
+								</label>
+                            </div>
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th class="columnIndex" style="width: 40px;">#</th>
+                                <th>Marca</th>
+                                <th>Model</th>
+                                <th>Matricula</th>
+                                <th>Material</th>
+                                <th class="columnIcon"></th>
+                                <th class="columnIcon"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="even pointer" ng-repeat="cylinder in cylinders | paginate:pageSize:search" ng-class="{selectelement:Cylinderselected.id==cylinder.id}">
+                                <td class="columnIndex">{{$index + 1}}</td>
+                                <td>{{cylinder.marke}}</td>
+                                <td>{{cylinder.model}}</td>
+                                <td>{{cylinder.license}}</td>
+                                <td>{{cylinder.material}}</td>
+                                <td class="columnCenter" ng-click="selectedCylinder(cylinder,1)"><i class="fa fa-pencil-square-o" title="Editar"></i></td>
+                                <td class="columnCenter" data-toggle="modal" data-target="#modal-delete" ng-click="selectedCylinder(cylinder,2)"><i class="fa fa-trash" title="Eliminar"></i></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <paginator></paginator>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="hpanel hyellow">
+            <div class="panel-body">
+                <form role="form">
+                    <div class="row">
+                        <div class="form-group col-lg-6">
+                            <label for="code">Code<span class="required">*</span></label>
+                            <input type="text" id="code" class="form-control" ng-model="editCylinder.code" validate="text-number" required placeholder="Codigo identificador"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="standard">Norma de fabricacion<span class="required">*</span></label>
+                            <input type="text" id="standard" class="form-control" ng-model="editCylinder.standard" validate="text-number" required placeholder="Norma"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-12">
+                            <label for="license">Matricula del organizmo de certificacion<span class="required">*</span></label>
+                            <input type="text" id="license" class="form-control" ng-model="editCylinder.license" required placeholder="Matricula"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="marke">Marca<span class="required">*</span></label>
+                            <input type="text" id="marke" class="form-control" ng-model="editCylinder.marke" validate="text-number" required placeholder="Marca"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="model">Modelo<span class="required">*</span></label>
+                            <input type="text" id="model" class="form-control" ng-model="editCylinder.model" validate="text-number" required placeholder="Modelo"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="liter">Litros</label>
+                            <input type="text" id="liter" class="form-control" ng-model="editCylinder.liter" validate="real" placeholder="Litros"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="diameter">Diametro Nominal (mm)</label>
+                            <input type="text" id="diameter" class="form-control" ng-model="editCylinder.diameter" validate="real" placeholder="Diametro"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="hardness">Dureza</label>
+                            <input type="text" id="hardness" class="form-control" ng-model="editCylinder.hardness" placeholder="Dureza"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="density">Espesor minimo de calculo (mm)</label>
+                            <input type="text" id="density" class="form-control" ng-model="editCylinder.density" validate="real" placeholder="Espesor"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="longitude">Longitud (mm)</label>
+                            <input type="text" id="longitude" class="form-control" ng-model="editCylinder.longitude" validate="real" placeholder="Longitud"
+                                required aria-required="true">
+                        </div>
+                        <div class="form-group col-lg-6">
+                            <label for="material">Material</label>
+                            <input type="text" id="material" class="form-control" ng-model="editCylinder.material" validate="text-number" placeholder="Material"
+                                required aria-required="true">
+                        </div>
+                        <!--<number-spin data-ng-model="editCylinder.longitude"></number-spin>-->
+                        <div class="col-lg-12">
+                            <button class="btn btn-default" type="button" ng-click="newCylinder()" title="Limpiar controles">Cancel</button>
+                            <button class="btn btn-primary" type="button" ng-disabled="validateControls()" ng-click="saveCylinder()" title="Guardar">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="panel-footer">
+                Especificacion de cilindros de gas.
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade hmodal-danger in" id="modal-delete" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">Eliminar cilindro</h4>
+            </div>
+            <div class="modal-body">
+                <p>¿Esta seguro de eliminar el registro?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cerrar">Cancelar</button>
+                <button type="button" class="btn btn-primary" ng-click="deleteCylinder()" title="Eliminar">Eliminar</button>
+            </div>
+        </div>
+    </div>
+</div>

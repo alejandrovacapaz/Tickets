@@ -1,0 +1,88 @@
+<div ng-show="isAfirmative && isClickResult">
+    <div class="panel-body text-center h-200">
+        <h3 class="m-xs">Derivar al mismo taller socio</h3>
+        (Cierra el ticket como derivado al mismo taller socio, derivar y notificar)
+        <p>
+            <div class="row">
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-disabled="!garageCustomer" ng-click="openWathsapWebModalGarage()" title="Abrir WathsApp Taller">
+                            <i class="fa fa-whatsapp"></i>
+                        </button>
+                    </span>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-click="openModalMap()" title="Buscar Taller">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                    <input type="text" placeholder="Buscar taller" readonly="readonly" value="{{garageCustomer.fullName}}" class="form-control">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-disabled="!garageCustomer" ng-click="openWathsapWebModal()" title="Abrir WathsApp">
+                            <i class="fa fa-whatsapp"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <textarea class="form-control" ng-model="editTicket.detail" maxlength="255" rows="3" placeholder="Observaciones"></textarea>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <button class="btn btn-success" type="button" ng-disabled="!editTicket.detail || !garageCustomer" ng-click="asignGarageAndSendNotificacion(statusTicket.DERIVADOMISMOTALLERSOCIO)">
+                        <i class="fa fa-lock"></i>
+                        <span class="bold"> Asignar Taller y Notificar</span>
+                    </button>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>
+
+<div ng-show="!isAfirmative && isClickResult">
+    <div class="panel-body text-center h-200">
+        <h3 class="m-xs">Derivar a un nuevo taller</h3>
+        (Cierra el ticket como derivado a otro taller socio, derivar, notificar y calificar al anterior taller)
+        <p>
+            <div class="row">
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-success" ng-disabled="!garageCustomer" ng-click="openWathsapWebModalGarage()" title="Abrir WathsApp Taller">
+                            <i class="fa fa-whatsapp"></i>
+                        </button>
+                    </span>
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-click="openModalMap()" title="Buscar Taller">
+                            <i class="fa fa-search"></i>
+                        </button>
+                    </span>
+                    <input type="text" placeholder="Buscar taller" readonly="readonly" value="{{garageCustomer.fullName}}" class="form-control">
+                    <span class="input-group-btn">
+                        <button type="button" class="btn btn-primary" ng-disabled="!garageCustomer" ng-click="openWathsapWebModal()" title="Abrir WathsApp">
+                            <i class="fa fa-whatsapp"></i>
+                        </button>
+                    </span>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <div class="alert alert-warning text-left">
+                        <i class="fa fa-smile-o"></i> Calificar al anterior taller
+                        <b>{{garageFirstChecked}}</b>
+                    </div>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <textarea class="form-control" rows="3" id="comment" ng-model="editTicket.detail" maxlength="255" placeholder="Observaciones"></textarea>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <h1 class="rate">{{rate}}</h1>
+                    <div class="row lead evaluation">
+                        <div id="colorstar" class="starrr ratable pointer">
+                        </div>
+                    </div>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <button class="btn btn-success" type="button" ng-disabled="!editTicket.detail || !garageCustomer" ng-click="asignGarageAndSendNotificacion(statusTicket.DERIVAOTROTALLERSOCIO)">
+                        <i class="fa fa-lock"></i>
+                        <span class="bold"> Asignar Taller y Notificar</span>
+                    </button>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>

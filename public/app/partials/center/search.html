@@ -1,0 +1,159 @@
+<div class="row">
+    <div class="col-lg-6">
+        <div class="hpanel hyellow" style="margin-bottom: 10px;">
+            <div class="panel-heading hbuilt" panel-collapse>
+                <div class="panel-tools">
+                    <a class="showhide">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </div>
+                <i class="fa fa-filter"></i> Filtros vencimiento (plazo)
+            </div>
+            <div class="panel-body collapse" style="padding-bottom: 0px; padding-top: 10px; display: block;">
+                <div class="form-group col-md-3">
+                    <label for="searchList">Tipo</label>
+                    <select id="searchList" class="form-control input-sm" ng-model="dateRange" ng-options="range as range.range for range in dateRanges"></select>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="maxExpire">Desde</label>
+                    <number-spin id="maxExpire" mode="negative" ng-model="minRangeExpire"></number-spin>
+                </div>
+                <div class="form-group col-md-4">
+                    <label for="minExpire">Hasta</label>
+                    <number-spin id="minExpire" mode="negative" ng-model="maxRangeExpire"></number-spin>
+                </div>
+                <div class="col-md-1">
+                    <button class="btn btn-default" type="button" style="margin-top: 22px; margin-left: -10px;" ng-click="getDataFiltered()">
+                        <i class="fa fa-binoculars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-lg-6">
+        <div class="hpanel hyellow" style="margin-bottom: 10px;">
+            <div class="panel-heading hbuilt" panel-collapse>
+                <div class="panel-tools">
+                    <a class="showhide">
+                        <i class="fa fa-chevron-down"></i>
+                    </a>
+                </div>
+                <i class="fa fa-filter"></i> Filtros cantidad cilindros
+            </div>
+            <div class="panel-body collapse" style="padding-bottom: 0px; padding-top: 10px; display: block;">
+                <div class="form-group col-md-5">
+                    <label for="minCylinder">Min cilindro</label>
+                    <number-spin ng-model="minRangeCountCylinder" minvalue="1"></number-spin>
+                </div>
+                <div class="form-group col-md-5">
+                    <label for="maxCylinder">Max cilindro</label>
+                    <number-spin ng-model="maxRangeCountCylinder" minvalue="1"></number-spin>
+                </div>
+                <div class="col-md-2">
+                    <button class="btn btn-default" type="button" style="margin-top: 22px;" ng-click="getDataFiltered()">
+                        <i class="fa fa-binoculars"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel" style="margin-bottom: 10px;">
+            <div class="panel-body">
+                <div class="input-group">
+                    <input class="form-control" type="text" placeholder="Buscar..." ng-press-enter="getDataFiltered()" ng-model="search">
+                    <div class="input-group-btn" ng-click="getDataFiltered()">
+                        <a class="btn btn-default">
+                            <i class="fa fa-search"></i>
+                        </a>
+                    </div>
+                    <div class="input-group-btn" ng-click="saveFilterByUser()" title="Recordar lista">
+                        <a class="btn btn-primary">
+                            <i class="fa fa-save"></i>
+                        </a>
+                    </div>
+                    <div class="input-group-btn" ng-click="clearFilters()" title="Limpiar filtros">
+                        <a class="btn btn-default">
+                            <i class="pe-7s-filter"></i>
+                        </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="hpanel hblue" style="margin-bottom: 10px;">
+            <div class="panel-body">
+                <div class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    <div class="row" style="padding-bottom: 10px;">
+                        <div class="col-sm-1 col-xs-12">
+                            <div class="dataTables_length">
+                                <select class="form-control input-sm" ng-model="pageSize" ng-options="item for item in filterRowsByPage" ng-change="getDataFiltered()"></select>
+                            </div>
+                        </div>
+                        <div class="col-sm-2 col-xs-12" style="margin-top: 6px;">
+                            Son {{totalRows}} registros
+                        </div>
+                        <div class="col-sm-3 col-xs-12">
+                            <button type="button" class="btn btn-outline btn-primary" ng-class="(typeMemberFilter== 2) ? 'active-member' : 'inactive-member'"
+                                ng-click="selectFilterMember(2)">Todos</button>
+                            <button type="button" class="btn btn-outline btn-primary" ng-class="(typeMemberFilter== 1) ? 'active-member' : 'inactive-member'"
+                                ng-click="selectFilterMember(1)">Socios</button>
+                            <button type="button" class="btn btn-outline btn-primary" ng-class="(typeMemberFilter== 0) ? 'active-member' : 'inactive-member'"
+                                ng-click="selectFilterMember(0)">No Socios</button>
+                        </div>
+                        <div class="col-sm-3 col-xs-12">
+                            <div class="pull-right">
+                                <button type="button" class="btn btn-outline btn-info" ng-class="(order== 1) ? 'active-order' : 'inactive-order'" ng-click="selectOrderFilter(1)">Vencimiento</button>
+                                <button type="button" class="btn btn-outline btn-info" ng-class="(order== 2) ? 'active-order' : 'inactive-order'" ng-click="selectOrderFilter(2)">Nro. Cilindros</button>
+                            </div>
+                        </div>
+                        <div class="col-sm-3 col-xs-12" style="margin-top: 6px;">
+                            {{rangeDateFilter}}
+                        </div>
+                    </div>
+                    <table class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+                        <thead>
+                            <tr role="row">
+                                <th class="columnIndex" style="width: 40px;">#</th>
+                                <th style="width: 280px;">Nombre</th>
+                                <th style="width: 100px;">CI</th>
+                                <th style="width: 70px;">Nro de Cilindros</th>
+                                <th style="width: 70px;">Plazo (dias)</th>
+                                <th style="width: 50px;">Socio</th>
+                                <th style="width: 50px;">Reprogramado</th>
+                                <th class="columnIcon"></th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr class="even pointer" ng-repeat="customer in customers" ng-class="{selectelement:customerselected.id==customer.id}">
+                                <td class="columnIndex">{{$index + 1}}</td>
+                                <td>{{customer.fullName}}</td>
+                                <td>{{customer.numberId}}</td>
+                                <td>{{customer.maxCylinder}}</td>
+                                <td>{{customer.expireDate}}</td>
+                                <td>{{customer.isMember == 0 ? 'No' : 'Si'}}</td>
+                                <td>{{customer.dateReprogram}}</td>
+                                <td class="columnCenter" ng-click="openTicket(customer)">
+                                    <i class="fa fa-phone" title="Llamar"></i>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                    <div class="paginate" ng-show="numberOfPages > 1">
+                        <button class="button-paginate btn-previous" ng-style="{ 'color' : (currentPage == 1) ? '#6a6c6f' : '#337ab7' }" ng-disabled="currentPage == 1"
+                            ng-click="previousPage()">Anterior</button>
+                        <select class="form-control m-b selected-page" ng-model="currentPage" ng-options="item for item in pagesForpage" ng-change="getDataFiltered()"></select>
+                        <span class="page-indicator">de {{numberOfPages}}</span>
+                        <button class="button-paginate btn-next" ng-style="{ 'color' : (currentPage >= totalRows / pageSize) ? '#6a6c6f' : '#337ab7' }"
+                            ng-class="paginate-enabled" ng-disabled="currentPage >= totalRows / pageSize" ng-click="nextPage()">Siguiente</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

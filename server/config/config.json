@@ -1,0 +1,18 @@
+{  
+  "development": {
+    "username": "root",
+    "password": "admin1234",
+    "database": "db_9ffd4f_test",
+    "host": "localhost",
+    "dialect": "mysql",
+    "timezone": "-04:00"
+  },
+  "production": {
+    "username": "9ffd4f_test",
+    "password": "admin1234",
+    "database": "db_9ffd4f_test",
+    "host": "mysql5015.smarterasp.net",
+    "dialect": "mysql",
+    "timezone": "-04:00"
+  }
+}

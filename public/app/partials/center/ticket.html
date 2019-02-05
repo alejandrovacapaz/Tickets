@@ -1,0 +1,451 @@
+<div class="row" style="position:relative;">
+    <div id="content-window" style="position:absolute;top:0;right:0;display: none;">
+        <div class="panel panel-default" id="screen-container">
+            <div class="panel-heading">
+                ANH - Agencia Nacional de Hidrocarburos
+            </div>
+            <div class="panel-body">
+                <!--<iframe src="#" id="ifrm-content" frameborder="0" width="100%" height="100%"></iframe>-->
+                <iframe id='ifrm-content' src="#" frameborder="0" width="100%" height="100%" style="height: 500px;"></iframe>
+                <!--<iframe src="http://www.ruat.gob.bo/vehiculos/consultageneral/InicioBusquedaVehiculo.jsf" frameborder="0" width="100%" height="100%"></iframe>-->
+            </div>
+        </div>
+    </div>
+    <div class="col-sm-12">
+        <div class="row" id="row-up">
+            <div class="col-sm-12" id="col-up-left">
+                <div id="content-col-right">
+                    <div class="panel panel-default" style="margin-bottom: 5px !important;">
+                        <div class="panel-heading">
+                            <h4 class="panel-title">
+                                <a data-toggle="collapse" target="_self" data-parent="#accordion" href="#tickets" aria-expanded="true">Lista de tickets</a>
+                                <div class="panel-tools">
+                                    <a title="Atras" ng-click="back()"><i class="fa fa-hand-o-left"></i></a>
+                                </div>
+                            </h4>
+                        </div>
+                        <div id="tickets" class="collapse in" id="collapseExample" aria-expanded="true">
+                            <div class="panel-body">
+                                <div class="table-responsive">
+                                    <table class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+                                        <thead>
+                                            <tr role="row">
+                                                <th class="columnIndex" style="width: 40px;">#</th>
+                                                <th>Fecha</th>
+                                                <th>Placa</th>
+                                                <th>Cilindro</th>
+                                                <th>Observacion</th>
+                                                <th>Estado</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr class="even pointer" ng-repeat="ticket in tickets">
+                                                <td class="columnIndex">{{$index + 1}}</td>
+                                                <td>{{ticket.dateRegister}}</td>
+                                                <td>{{ticket.numberPlate}}</td>
+                                                <td>{{ticket.codeCylinder}}</td>
+                                                <td>{{ticket.detail}}</td>
+                                                <td>{{ticket.status}}</td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="panel-group">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" target="_self" data-parent="#accordion" href="#customer" aria-expanded="false" class="collapsed">{{editCustomer.fullName}} -  {{editCustomer.mobile}}</a>
+                                </h4>
+                            </div>
+                            <div id="customer" class="panel-collapse collapse" aria-expanded="false" style="height: 0px;">
+                                <div class="panel-body">
+                                    <form role="form">
+                                        <div class="row">
+                                            <div class="form-group col-lg-4">
+                                                <label for="numberId">Nro CI<span class="required">*</span></label>
+                                                <input type="text" id="numberId" class="form-control" ng-model="editCustomer.numberId" validate="text-number" placeholder="Nombre completo"
+                                                    required>
+                                            </div>
+                                            <div class="form-group col-lg-8">
+                                                <label for="fullName">Nombre<span class="required">*</span></label>
+                                                <input type="text" id="fullName" class="form-control" ng-model="editCustomer.fullName" validate="text-number" placeholder="Nombre completo"
+                                                    required>
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label for="phone">Telefono</label>
+                                                <input type="text" id="phone" class="form-control" ng-model="editCustomer.phone" validate="number-integer" placeholder="Numero fijo"
+                                                    maxlength="7">
+                                            </div>
+                                            <div class="form-group col-lg-8">
+                                                <label for="address">Direccion</label>
+                                                <input type="text" id="address" class="form-control" ng-model="editCustomer.address" placeholder="Direccion">
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label for="cellPhone">WhatsApp</label>
+                                                <input type="text" id="cellPhone" class="form-control" ng-model="editCustomer.cellPhone" validate="number-integer" placeholder="Celular WhatsApp"
+                                                    maxlength="8">
+                                            </div>
+                                            <div class="form-group col-lg-8">
+                                                <label for="zone">Zona</label>
+                                                <input type="text" id="zone" class="form-control" ng-model="editCustomer.zone" placeholder="Zona de referencia">
+                                            </div>
+                                            <div class="form-group col-lg-4">
+                                                <label for="birthdate">Fecha de Nacimiento:</label>
+                                                <div class="input-group date" id="birthdate">
+                                                    <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                                    <input type="text" class="form-control" ng-model="editCustomer.birthdate" readonly>
+                                                </div>
+                                            </div>
+                                            <div class="form-group col-lg-8">
+                                                <label for="detail">Detalles</label>
+                                                <input type="text" id="detail" class="form-control" ng-model="editCustomer.detail" placeholder="Detalles u observaciones">
+                                            </div>
+                                            <div class="col-lg-12 pull-right">
+                                                <button class="btn btn-primary" type="button" ng-disabled="validateCustomerControls()" ng-click="saveCustomer()" title="Guardar">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h4 class="panel-title">
+                                    <a data-toggle="collapse" target="_self" data-parent="#accordion" href="#cylinders" aria-expanded="false" class="collapsed">Orden de trabajo [vehiculo/cilindro]</a>
+                                </h4>
+                            </div>
+                            <div id="cylinders" class="panel-collapse" aria-expanded="true">
+                                <div class="panel-body">
+                                    <div class="table-responsive">
+                                        <table class="table table-striped table-bordered table-hover dataTable no-footer" width="100%" role="grid" style="width: 100%;">
+                                            <thead>
+                                                <tr role="row">
+                                                    <th class="columnIndex" style="width: 40px;">#</th>
+                                                    <th>Fecha</th>
+                                                    <th>Cilindro</th>
+                                                    <th>Plazo</th>
+                                                    <th></th>
+                                                    <th>Placa</th>
+                                                    <th>Marca</th>
+                                                    <th>Color</th>
+                                                    <th>Clase</th>
+                                                    <th>Modelo</th>
+                                                    <th>Taller</th>
+                                                    <th>Socio</th>
+                                                    <th>Estado Taller</th>
+                                                    <th>
+                                                        <input type="checkbox" ng-disabled="allowEdit" ng-model="selectAll" ng-click="checkAll($event)" />                                                        Todos
+                                                    </th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr class="even pointer" ng-repeat="order in workOrders">
+                                                    <td class="columnIndex">{{$index + 1}}</td>
+                                                    <td>{{order.lastDate}}</td>
+                                                    <td>{{order.codeCylinder}}</td>
+                                                    <td>{{order.expireDate}}</td>
+                                                    <td ng-click="copyNumberPlate(order)">
+                                                        <i class="pe-7s-copy-file"></i>
+                                                    </td>
+                                                    <td ng-click="openRuat(order)">{{order.numberPlate}}</td>
+                                                    <td>{{order.Car.make}} - {{order.Car.model}}</td>
+                                                    <td>{{order.Car.color}}</td>
+                                                    <td>{{order.Car.type}}</td>
+                                                    <td>{{order.Car.annum}}</td>
+                                                    <td>{{order.Garage.fullName}}</td>
+                                                    <td>{{order.Garage.isPartner == true ? 'Si':'No'}}</td>
+                                                    <td>{{order.Garage.enabled}}</td>
+                                                    <td>
+                                                        <input type="checkbox" ng-model="order.isChecked" ng-disabled="allowEdit" ng-click="selectedOrder(order,$event)">
+                                                    </td>
+                                                </tr>
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="hpanel" id="issueTicket">
+                        <div ng-include="'/app/partials/center/ticketQuestion.html'"></div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-sm-0" id="col-up-right">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade hmodal-danger in" id="modal-delete" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">Cerrar ticket</h4>
+            </div>
+            <div class="modal-body">
+                <p>{{ mensajeModalEliminar }}</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">No</button>
+                <button type="button" class="btn btn-danger" ng-click="saveTicket()" title="Cerrar Ticket">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade hmodal-primary in" id="modal-plate-exists" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">Registro de nueva placa de vehiculo</h4>
+            </div>
+            <div class="modal-body">
+                <p>Existe en nuestra base de datos la placa: {{editTicket.numberPlate}} asignada a otro cliente. ¿Desea cerrar
+                    el ticket sin guardar la placa?</p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">No</button>
+                <button type="button" class="btn btn-danger" ng-click="closeTicketWithoutSavingVehicle(statusTicket.CAMBIOVEHICULO)" title="Cerrar Ticket">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="modal fade hmodal-primary" id="modal-reprogram" role="dialog">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="color-line"></div>
+            <div class="modal-header">
+                <h4 class="modal-title">Reprogramar la llamada</h4>
+            </div>
+            <div class="modal-body">
+                <p>
+                    <div class="row">
+                        <div class="form-group col-lg-12">
+                            <label for="dateReprogram">Reprogramar para el:</label>
+                            <div class="input-group date" id="dateReprogram">
+                                <span class="input-group-addon"><span class="fa fa-calendar"></span></span>
+                                <input type="text" class="form-control" ng-model="editTicket.dateReprogram" readonly>
+                            </div>
+                        </div>
+                    </div>
+                </p>
+                <p>
+                    <textarea class="form-control" rows="3" ng-model="editTicket.detail" maxlength="255" placeholder="Observaciones"></textarea>
+                </p>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal" title="Cancelar">No</button>
+                <button type="button" class="btn btn-danger" ng-disabled="!editTicket.detail || !editTicket.dateReprogram" ng-click="reProgram(statusTicket.VOLVERALLAMAR)"
+                    title="Cerrar Ticket">Si</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+    $("body").toggleClass("hide-sidebar");
+    $('#layout-one').click(function (e) {
+        e.preventDefault();
+        templateOne();
+    })
+
+    $('#layout-two').click(function (e) {
+        e.preventDefault();
+        templateTwo();
+    })
+
+    $('#layout-three').click(function (e) {
+        e.preventDefault();
+        templateThree();
+    })
+
+    $('#layout-four').click(function (e) {
+        e.preventDefault();
+        templateFour();
+    })
+
+    var layouts = {
+        nolayout: 0,
+        layoutOne: {
+            ruatInFooter: 1,
+            anhInFooter: 2
+        },
+        layoutTwo: 2,
+        layoutThree: 3,
+        layoutFour: 4
+    }
+
+    var layoutActive = layouts.nolayout;
+    var panels = {
+        row_up: '#row-up',
+        col_up_left: '#col-up-left',//A
+        col_up_right: '#col-up-right',//B
+        screen_container: '#screen-container',
+        row_down: '#row-down',
+        row_down_col: '#row-down-col',//C
+
+        content_window: '#content-window',
+        ifrm_content: '#ifrm-content',
+        content_col_right: '#content-col-right'
+    }
+
+    function resetTemplate() {
+        $(panels.col_up_left).removeClass('col-sm-12');
+        $(panels.col_up_left).removeClass('col-sm-4');
+        $(panels.col_up_left).addClass('col-sm-4');
+
+        $(panels.col_up_right).removeClass('col-sm-0');
+        $(panels.col_up_right).removeClass('col-sm-8');
+        $(panels.col_up_right).addClass('col-sm-8');
+        $(panels.screen_container).show();
+        if ($(panels.col_up_right).find(panels.screen_container).length != 1) {
+            $(panels.screen_container).moveTo(panels.col_up_right);
+        }
+        $(panels.content_col_right).moveTo(panels.col_up_left);
+    }
+
+    function templateOne() {
+        resetTemplate();
+    }
+
+    function templateTwo() {
+        resetTemplate();
+        $(panels.col_up_left).removeClass('col-sm-8');
+        $(panels.col_up_left).addClass('col-sm-12');
+        $(panels.col_up_right).removeClass('col-sm-4');
+        $(panels.col_up_right).addClass('col-sm-0');
+        $(panels.screen_container).moveTo(panels.row_down_col);
+    }
+
+    function templateThree() {
+        resetTemplate();
+        $(panels.col_up_left).removeClass('col-sm-8');
+        $(panels.col_up_left).addClass('col-sm-4');
+        $(panels.col_up_right).removeClass('col-sm-4');
+        $(panels.col_up_right).addClass('col-sm-8');
+        $(panels.screen_container).moveTo(panels.col_up_left);
+        $(panels.content_col_right).moveTo(panels.col_up_right);
+    }
+
+    function templateFour() {
+        templateOne();
+        $(panels.col_up_left).removeClass('col-sm-4');
+        $(panels.col_up_left).addClass('col-sm-12');
+        $(panels.col_up_right).removeClass('col-sm-8');
+        $(panels.col_up_right).addClass('col-sm-0');
+        $(panels.screen_container).moveTo(panels.content_window);
+        $(panels.screen_container).hide();
+
+        popup = openWindowPopup("/app/partials/shared/modalANH.html", 'CallBack System', '1024', '600');
+        popup.focus();
+    }
+
+    var layoutOne = {
+        moveRuatToFooter: function () {
+            if (layoutActive == layouts.layoutOne.anhInFooter) {
+                resetLayout();
+                $(panels.anh_container).moveTo(panels.col_up_right);
+                $(panels.ruat_container).moveTo(panels.row_down_col);
+            }
+            else {
+                resetLayout();
+                $(panels.ruat_container).moveTo(panels.row_down_col, function () {
+                    $(panels.col_up_right).scaleTo(panels.col_up_left);
+                    $(panels.anh_container).scaleTo(panels.col_up_right, 10);
+                });
+            }
+
+            layoutActive = layouts.layoutOne.ruatInFooter;
+        },
+        moveANHToFooter: function () {
+            if (layoutActive == layouts.layoutOne.ruatInFooter) {
+                resetLayout();
+                $(panels.ruat_container).moveTo(panels.col_up_right);
+                $(panels.anh_container).moveTo(panels.row_down_col);
+            }
+            else {
+                resetLayout();
+                $(panels.anh_container).moveTo(panels.row_down_col, function () {
+                    $(panels.col_up_right).scaleTo(panels.col_up_left);
+                    $(panels.ruat_container).scaleTo(panels.col_up_right, 10);
+                });
+            }
+            layoutActive = layouts.layoutOne.anhInFooter;
+        },
+        equalScaleColumns: function () {
+            $(panels.col_up_right).scaleTo(panels.col_up_left);
+        },
+        moveContentToSecondRow: function (content) {
+            $(content).scaleTo(panels.col_up_right, 10);
+        }
+    }
+
+    var layoutTwo = {
+        moveContainersToDefault: function () {
+            if (layoutActive != layouts.nolayout) {
+                resetLayout();
+                $(panels.anh_container).moveTo(panels.col_up_right);
+                $(panels.ruat_container).moveTo(panels.col_up_right);
+                $(panels.col_up_right).removeAttr('style');
+            }
+        }
+    }
+
+    function resetLayout() {
+        $(panels.col_up_right).removeClass("col-sm-0").addClass("col-sm-4");
+        $(panels.col_up_left).removeClass("col-sm-12").addClass("col-sm-8");
+        $(panels.anh_container).show();
+        $(panels.ruat_container).show();
+    }
+
+    var layoutThree = {
+        moveAllToPopUp: function () {
+            var _self = this;
+            $(panels.col_up_left).effect('transfer', { to: panels.content_window, className: "ui-effects-transfer" }, 500,
+                function () {
+                    $(panels.anh_container).hide();
+                    $(panels.ruat_container).hide();
+
+                    $(panels.col_up_right).removeClass("col-sm-4").addClass("col-sm-0");
+                    $(panels.col_up_left).removeClass("col-sm-8").addClass("col-sm-12");
+                });
+        },
+        resizeContainerApp: function () {
+            //cambiar row-up de col-sm-8 a col-sm-12 y reducir la columnda de 4
+        }
+    }
+
+    var layoutFour = {
+        moveANHToFooter: function () {
+            // mover anh div a fila row-down 
+            //cambiar el ancho de col-container-left
+        },
+        moveRUATToColContainerRight: function () {
+            //mover ruat a la columna col-content-right
+            //cambiar el tamanio de la columna col-container-right
+        }
+    }
+
+    $.fn.moveTo = function (container, actionToFinish) {
+        var _self = this;
+        $(_self).effect('transfer', { to: container, className: "ui-effects-transfer" }, 500,
+            function () {
+                $(_self).appendTo(container);
+                if (actionToFinish)
+                    actionToFinish();
+            });
+    }
+
+    $.fn.scaleTo = function (elementTarget, percent) {
+        percent = percent || 0;
+        var _self = this;
+        $(_self).height($(elementTarget).height() - percent);
+    }
+
+</script>

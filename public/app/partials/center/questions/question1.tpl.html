@@ -1,0 +1,19 @@
+<div ng-show="!isAfirmative && isClickResult">
+    <div class="panel-body text-center h-200">
+        <h3 class="m-xs">Dar de baja al cliente</h3>
+        (Cerrar ticket como numero inexistente y dar de baja al cliente)
+        <p>
+            <div class="row">
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <textarea class="form-control" rows="3" ng-model="editTicket.detail" maxlength="255" placeholder="Observaciones"></textarea>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <button class="btn btn-danger" type="button" ng-click="confirmClose(statusTicket.NUMEROINEXISTENTE)">
+                        <i class="fa fa-lock"></i>
+                        <span class="bold"> Cerrar Ticket</span>
+                    </button>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>

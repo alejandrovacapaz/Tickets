@@ -1,0 +1,40 @@
+<div ng-show="isAfirmative && isClickResult">
+    <div class="panel-body text-center h-200">
+        <h3 class="m-xs">Registrar nuevo vehiculo</h3>
+        (Cerrar ticket como cambio de vehiculo y guardar nuevo vehiculo)
+        <p>
+            <div class="row">
+                <div class="input-group m-b col-md-6 col-md-offset-3 text-left">
+                    <label for="numberPlate">Nro Placa<span class="required">*</span></label>
+                    <input type="text" id="numberPlate" class="form-control" ng-model="editTicket.numberPlate" validate="text-number" required
+                        placeholder="Numero de placa" aria-required="true">
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <button class="btn btn-primary" type="button" ng-click="closeTicketBuyNewVehicule(statusTicket.CAMBIOVEHICULO)">
+                        <i class="fa fa-lock"></i>
+                        <span class="bold"> Guardar y Cerrar</span>
+                    </button>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>
+<div ng-show="!isAfirmative && isClickResult">
+    <div class="panel-body text-center h-200">
+        <h3 class="m-xs">No tiene el vehiculo</h3>
+        (Cerrar ticket como no tiene el vehiculo)
+        <p>
+            <div class="row">
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <textarea class="form-control" rows="3" ng-model="editTicket.detail" maxlength="255" placeholder="Observaciones"></textarea>
+                </div>
+                <div class="input-group m-b col-md-6 col-md-offset-3">
+                    <button class="btn btn-danger" type="button" ng-click="confirmClose(statusTicket.NOTIENEVEHICULOS)">
+                        <i class="fa fa-lock"></i>
+                        <span class="bold"> Cerrar Ticket</span>
+                    </button>
+                </div>
+            </div>
+        </p>
+    </div>
+</div>
